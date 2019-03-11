@@ -1,8 +1,8 @@
-require './lib/pry-gist/version'
+require './lib/pry-jist/version'
 
 Gem::Specification.new do |s|
-  s.name        = 'pry-gist'
-  s.version     = PryGist::VERSION
+  s.name        = 'pry-jist'
+  s.version     = PryJist::VERSION
   s.date        = Time.now.strftime('%Y-%m-%d')
   s.summary     = 'Upload code, docs, history to https://gist.github.com/'
   s.authors     = ['Kyrylo Silin']
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.require_path = 'lib'
-  s.files        = ['lib/pry-gist.rb', *Dir.glob('lib/**/*')]
+  s.files        = ['lib/pry-jist.rb', *Dir.glob('lib/**/*')]
   s.test_files   = Dir.glob('spec/**/*')
 
   s.required_ruby_version = '>= 1.9'

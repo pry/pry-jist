@@ -1,6 +1,6 @@
 require 'gist'
 
-module PryGist
+module PryJist
   class Gist < Pry::ClassCommand
     match 'gist'
     group 'Misc'
@@ -115,5 +115,5 @@ module PryGist
   end
 end
 
-Pry::Commands.add_command(PryGist::Gist)
+Pry::Commands.add_command(PryJist::Gist)
 Pry::Commands.alias_command 'clipit', 'gist --clip'

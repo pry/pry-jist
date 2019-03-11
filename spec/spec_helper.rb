@@ -1,4 +1,4 @@
-require 'pry-gist'
+require 'pry-jist'
 require 'rspec'
 
 RSpec.configure do |c|

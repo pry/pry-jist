@@ -1,4 +1,4 @@
-Pry Gist
+Pry Jist
 ========
 
 [![Circle Build Status](https://circleci.com/gh/pry/pry-gist.svg?style=shield)](https://circleci.com/gh/pry/pry-gist)
@@ -13,11 +13,11 @@ Installation
 ### Bundler
 
 ```
-gem 'pry-gist', '~> 1.0'
+gem 'pry-jist', '~> 1.0'
 ```
 
 ### Manual
 
 ```
-gem install pry-gist
+gem install pry-jist
 ```

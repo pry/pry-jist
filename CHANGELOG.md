@@ -1,4 +1,4 @@
-Pry Gist Changelog
+Pry Jist Changelog
 ==================
 
 ### master
