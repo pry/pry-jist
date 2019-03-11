@@ -1,6 +1,7 @@
 require 'gist'
 
 module PryJist
+  # @since v1.0.0
   class Gist < Pry::ClassCommand
     match 'gist'
     group 'Misc'
@@ -20,24 +21,21 @@ module PryJist
       @input_expression_ranges = []
       @output_result_ranges = []
 
-      opt.on :l, :lines,
-        "Restrict to a subset of lines. Takes a line number or range",
-        optional_argument: true, as: Range, default: 1..-1
-      opt.on :o, :out,
-        "Select lines from Pry's output result history. Takes an index " \
-        "or range",
-        optional_argument: true, as: Range, default: -5..-1 do |r|
+      opt.on :l, :lines, "Restrict to a subset of lines. Takes a line number or range",
+             optional_argument: true, as: Range, default: 1..-1
+      opt.on :o, :out, "Select lines from Pry's output result history. Takes an index " \
+                       "or range",
+             optional_argument: true, as: Range, default: -5..-1 do |r|
         output_result_ranges << (r || (-5..-1))
       end
-      opt.on :i, :in,
-        "Select lines from Pry's input expression history. Takes an index " \
-        "or range",
-        optional_argument: true, as: Range, default: -5..-1 do |r|
+      opt.on :i, :in, "Select lines from Pry's input expression history. Takes an " \
+                      "index or range",
+             optional_argument: true, as: Range, default: -5..-1 do |r|
         input_expression_ranges << (r || (-5..-1))
       end
-      opt.on :s, :super,
-        "Select the 'super' method. Can be repeated to traverse the ancestors",
-        as: :count
+      opt.on :s, :super, "Select the 'super' method. Can be repeated to traverse " \
+                         "the ancestors",
+             as: :count
       opt.on :d, :doc, "Select lines from the code object's documentation"
       opt.on :login, "Authenticate the gist gem with GitHub"
       opt.on :p, :public, "Create a public gist (default: false)", default: false
@@ -45,7 +43,7 @@ module PryJist
                     "gist it", default: false
     end
 
-    def process
+    def process # rubocop:disable Metrics/AbcSize
       return ::Gist.login! if opts.present?(:login)
 
       cc = Pry::Command::CodeCollector.new(args, opts, _pry_)
@@ -67,7 +65,7 @@ module PryJist
       output.puts "Copied content to clipboard!"
     end
 
-    def input_content
+    def input_content # rubocop:disable Metrics/AbcSize
       content = ""
       Pry::Command::CodeCollector.input_expression_ranges.each do |range|
         input_expressions = _pry_.input_ring[range] || []
@@ -98,19 +96,21 @@ module PryJist
 
     def gist_content(content, filename)
       response = ::Gist.gist(
-        content, filename: filename || "pry_gist.rb", public: !!opts[:p]
+        content,
+        filename: filename || "pry_gist.rb",
+        public: !!opts[:p] # rubocop:disable Style/DoubleNegation
       )
-      if response
-        url = response['html_url']
-        message = "Gist created at URL #{url}"
-        begin
-          ::Gist.copy(url)
-          message << ", which is now in the clipboard."
-        rescue ::Gist::ClipboardError # rubocop:disable Lint/HandleExceptions
-        end
+      return unless response
 
-        output.puts message
+      url = response['html_url']
+      message = "Gist created at URL #{url}"
+      begin
+        ::Gist.copy(url)
+        message << ", which is now in the clipboard."
+      rescue ::Gist::ClipboardError # rubocop:disable Lint/HandleExceptions
       end
+
+      output.puts message
     end
   end
 end

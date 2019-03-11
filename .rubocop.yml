@@ -19,7 +19,7 @@ Style/HashSyntax:
 
 Naming/FileName:
   Exclude:
-    - 'lib/pry-gist.rb'
+    - 'lib/pry-jist.rb'
 
 Style/NumericLiterals:
   Enabled: false
